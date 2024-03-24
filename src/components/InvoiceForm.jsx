@@ -75,9 +75,11 @@ const InvoiceForm = () => {
             id: id,
             name: "",
             description: "",
+            price: 1.0,
             quntity: 1,
         };
         setItems((items) => [...items, item]);
+        console.log('ITEMS', items);
     };
 
     const handleRowDel = (item) => {
@@ -113,16 +115,17 @@ const InvoiceForm = () => {
         });
 
         // subTotal = parseFloat(subTotal).toFixed(2);
-        console.log("Sub Total: ", subTotal);
+        // console.log("Sub Total: ", subTotal);
 
         const discountAmount = parseFloat(
             parseFloat(subTotal) * parseFloat(state.discountRate / 100)
         ).toFixed(2);
-        console.log("ds", discountAmount);
+        // console.log("ds", discountAmount);
+        
         const taxAmount = parseFloat(
             parseFloat(subTotal) * parseFloat(state.taxRate / 100)
         ).toFixed(2);
-        console.log("tx", taxAmount);
+        // console.log("tx", taxAmount);
 
         const total =
             parseFloat(subTotal) +

@@ -26,12 +26,12 @@ const InvoiceItem = (props) => {
                 </thead>
                 <tbody>{itemTable}</tbody>
             </Table>
-            <Button className="fw-bold" onClick={props.onRowAdd}>Add Item</Button>
+            <Button className="fw-bold" onClick={props.onRowAdd}>
+                Add Item
+            </Button>
         </div>
     );
 };
-
-
 
 function ItemRow(props) {
     const onDelEvent = () => {
