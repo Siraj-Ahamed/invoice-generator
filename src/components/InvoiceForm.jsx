@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InvoiceItem from "./reusable/InvoiceItem";
@@ -50,7 +50,7 @@ const InvoiceForm = () => {
             name: event.target.name,
             value: event.target.value,
         };
-        console.log("Individual Item:", individulItem);
+        // console.log("Individual Item:", individulItem);
 
         var newItems = items.map((item) => {
             for (var key in item) {
@@ -101,12 +101,51 @@ const InvoiceForm = () => {
         setState((state) => ({ ...state, selectedOption }));
     };
 
-    const formSubmit = (e) => {
-        e.preventDefault();
+    // const formSubmit = (e) => {
+    //     e.preventDefault();
+    // };
+
+    const handleCalculateTotal = (items) => {
+        var subTotal = 0;
+        items.map((item) => {
+            subTotal += parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
+        });
+
+        // subTotal = parseFloat(subTotal).toFixed(2);
+        console.log('Sub Total: ', subTotal);
+
+        const discountAmount = parseFloat(
+            parseFloat(subTotal) * parseFloat(state.discountRate / 100)
+        ).toFixed;
+        const taxAmount = parseFloat(
+            parseFloat(subTotal) * parseFloat(state.taxRate / 100)
+        ).toFixed;
+
+        const total =
+            parseFloat(subTotal) +
+            parseFloat(taxAmount) -
+            parseFloat(discountAmount);
+
+            setTotal(total)
+
+            setState((state) => ({
+                ...state,
+                subTotal,
+                taxAmount,
+                discountAmount
+            }))
     };
 
+    useEffect(() => {
+        handleCalculateTotal(items)
+    }, [items, state.taxRate, state.discountRate]);
     return (
-        <Form onSubmit={formSubmit}>
+        <Form
+            onSubmit={(e) => {
+                e.preventDefault();
+                setState((state) => ({ ...state, isOpen: true }));
+            }}
+        >
             <Row>
                 <Col md={8} lg={9}>
                     <Card className="d-flex  p-4 p-xl-5 my-3 my-xl-4">
@@ -201,6 +240,30 @@ const InvoiceForm = () => {
                             onRowDel={handleRowDel}
                             currency={state.currency}
                         />
+                        <Row className="mt-4 justify-content-end">
+                            <Col lg={6}>
+                                <div className="d-flex flex-row align-items-start justify-content-between">
+                                    <span className="fw-bold">Subtotal:</span>
+                                    <span>
+                                        {state.currency} {state.subTotal}
+                                    </span>
+                                </div>
+                                <div className="d-flex flex-row align-items-start justify-content-between">
+                                    <span className="fw-bold">Discount:</span>
+                                    <span>
+                                        {state.discountRate}% {state.currency} 
+                                        {state.discountAmount}
+                                    </span>
+                                </div>
+                                <div className="d-flex flex-row align-items-start justify-content-between">
+                                    <span className="fw-bold">Discount:</span>
+                                    <span>
+                                        {state.taxRate}% {state.currency} 
+                                        {state.taxAmount}
+                                    </span>
+                                </div>
+                            </Col>
+                        </Row>
                     </Card>
                 </Col>
                 <Col md={4} lg={3}>
@@ -279,7 +342,15 @@ const InvoiceForm = () => {
                     </div>
                 </Col>
             </Row>
-            <InvoiceModal show={state.isOpen} closeModal={() => setState(state => ({...state, isOpen: false}))} info={state} items={items} total={total}/>
+            <InvoiceModal
+                showModal={state.isOpen}
+                closeModal={() =>
+                    setState((state) => ({ ...state, isOpen: false }))
+                }
+                info={state}
+                items={items}
+                total={total}
+            />
         </Form>
     );
 };

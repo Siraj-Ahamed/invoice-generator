@@ -4,7 +4,7 @@ import { Form, InputGroup } from "react-bootstrap";
 const EditableField = (props) => {
     return (
         <InputGroup className="my-1 flex-nowrap">
-            {/* {props.cellData.leading !== null && (
+            {props.cellData.leading !== null && (
                 <InputGroup.Text className="bg-light fw-bold border-0 text-secondary px-2">
                     <span
                         className="border border-2 border-secondary rounded-circle d-flex align-items-center justify-content-center small"
@@ -13,7 +13,7 @@ const EditableField = (props) => {
                         {props.cellData.leading}
                     </span>
                 </InputGroup.Text>
-            )} */}
+            )}
             <Form.Control
                 className={props.cellData.textAlign}
                 type={props.cellData.type}
@@ -26,7 +26,7 @@ const EditableField = (props) => {
                 step={props.cellData.step}
                 precision={props.cellData.precision}
                 onChange={props.onItemizedItemEdit}
-                required
+                // required
             />
         </InputGroup>
     );
