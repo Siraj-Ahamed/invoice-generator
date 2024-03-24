@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Modal } from "react-bootstrap";
+import { Table, Row, Col, Modal } from "react-bootstrap";
 
 export default function InvoiceModal(props) {
     return (
@@ -48,6 +48,28 @@ export default function InvoiceModal(props) {
                             </div>
                         </Col>
                     </Row>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>QTY</th>
+                                <th>DESCRIPTION</th>
+                                <th>PRICE</th>
+                                <th>AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {props.items.map((item, i) => {
+                                return (
+                                    <tr id={i} key={i}>
+                                        <td style={{width: "70px"}}>{item.quntity}</td>
+                                        <td>{item.name}-{item.description}</td>
+                                        <td className="text-end">{props.currency} {item.price}</td>
+                                        <td className="text-end">{props.currency} {item.price * item.quntity}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
                 </div>
             </div>
         </Modal>
