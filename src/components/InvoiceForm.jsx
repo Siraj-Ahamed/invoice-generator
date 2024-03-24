@@ -285,12 +285,6 @@ const InvoiceForm = () => {
                             variant="primary"
                             type="submit"
                             className="d-block w-100"
-                            onClick={() =>
-                                setState((state) => ({
-                                    ...state,
-                                    isOpen: true,
-                                }))
-                            }
                         >
                             Review Invoice
                         </Button>
