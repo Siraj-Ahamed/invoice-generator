@@ -66,10 +66,10 @@ function ItemRow(props) {
                     onItemizedItemEdit={props.onItemizedItemEdit}
                     cellData={{
                         type: "number",
-                        name: "quantity",
+                        name: "quntity",
                         min: 1,
                         step: 1,
-                        value: props.item.quantity,
+                        value: props.item.quntity,
                         id: props.item.id,
                     }}
                 />

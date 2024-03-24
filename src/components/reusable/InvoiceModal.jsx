@@ -15,7 +15,7 @@ export default function InvoiceModal(props) {
                 <h4 className='fw-bold my-2'>
                     {props.info.billFrom}
                 </h4>
-                <h6 className='fw-bold text-secondary mb-1'>Invoice#: {props.info.InvoiceNumber}</h6>
+                <h6 className='fw-bold text-secondary mb-1'>Invoice#: {props.info.invoiceNumber}</h6>
             </div>
             <div className="text-end ms-4">
                 <h6 className='fw-bold mt-1 mb-2'>Amount&nbsp;Due:</h6>

@@ -75,7 +75,7 @@ const InvoiceForm = () => {
             id: id,
             name: "",
             description: "",
-            quantity: 1,
+            quntity: 1,
         };
         setItems((items) => [...items, item]);
     };
@@ -108,36 +108,39 @@ const InvoiceForm = () => {
     const handleCalculateTotal = (items) => {
         var subTotal = 0;
         items.map((item) => {
-            subTotal += parseFloat(item.price).toFixed(2) * parseInt(item.quantity);
+            subTotal +=
+                parseFloat(item.price).toFixed(2) * parseInt(item.quntity);
         });
 
         // subTotal = parseFloat(subTotal).toFixed(2);
-        console.log('Sub Total: ', subTotal);
+        console.log("Sub Total: ", subTotal);
 
         const discountAmount = parseFloat(
             parseFloat(subTotal) * parseFloat(state.discountRate / 100)
-        ).toFixed;
+        ).toFixed(2);
+        console.log("ds", discountAmount);
         const taxAmount = parseFloat(
             parseFloat(subTotal) * parseFloat(state.taxRate / 100)
-        ).toFixed;
+        ).toFixed(2);
+        console.log("tx", taxAmount);
 
         const total =
             parseFloat(subTotal) +
             parseFloat(taxAmount) -
             parseFloat(discountAmount);
 
-            setTotal(total)
+        setTotal(total);
 
-            setState((state) => ({
-                ...state,
-                subTotal,
-                taxAmount,
-                discountAmount
-            }))
+        setState((state) => ({
+            ...state,
+            subTotal,
+            taxAmount,
+            discountAmount,
+        }));
     };
 
     useEffect(() => {
-        handleCalculateTotal(items)
+        handleCalculateTotal(items);
     }, [items, state.taxRate, state.discountRate]);
     return (
         <Form
@@ -251,15 +254,25 @@ const InvoiceForm = () => {
                                 <div className="d-flex flex-row align-items-start justify-content-between">
                                     <span className="fw-bold">Discount:</span>
                                     <span>
-                                        {state.discountRate}% {state.currency} 
+                                        {state.discountRate}% {state.currency}
                                         {state.discountAmount}
                                     </span>
                                 </div>
                                 <div className="d-flex flex-row align-items-start justify-content-between">
-                                    <span className="fw-bold">Discount:</span>
+                                    <span className="fw-bold">Tax:</span>
                                     <span>
-                                        {state.taxRate}% {state.currency} 
+                                        {state.taxRate}% {state.currency}
                                         {state.taxAmount}
+                                    </span>
+                                </div>
+                                <div
+                                    className="d-flex flex-row align-items-start justify-content-between mt-2"
+                                    style={{ fontSize: "1.125rem" }}
+                                >
+                                    <span className="fw-bold">Total:</span>
+                                    <span>
+                                        {state.currency}
+                                        {total}
                                     </span>
                                 </div>
                             </Col>
